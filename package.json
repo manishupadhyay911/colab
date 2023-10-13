@@ -1,0 +1,15 @@
+{
+  "name": "colab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^7.6.1",
+    "socket.io": "^4.7.2"
+  }
+}

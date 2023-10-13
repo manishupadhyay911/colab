@@ -1,6 +1,11 @@
 const mongoose = require("mongoose")
 const Document = require("./Document")
 const cors = require("cors");
+const path =require("path");
+const dotenv=require("dotenv");
+const express = require("express");
+
+dotenv.config();
 mongoose.connect("mongodb+srv://manish:12345@cluster0.rlzjbxz.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -9,7 +14,34 @@ mongoose.connect("mongodb+srv://manish:12345@cluster0.rlzjbxz.mongodb.net/?retry
 }).then(() => console.log("DB connected"))
 .catch((err) => console.log("DB Error => ", err));
 
-const io = require("socket.io")(3001, {
+const app=express();
+app.use(express.json());
+
+// deployment
+const __dirname1=path.resolve();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/client/dist")));
+  console.log("here")
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "client", "dist", "index.html"))
+  );
+} else {
+  
+  app.get("/", (req, res) => {
+    console.log("2 in")
+    res.send("API is running..");
+  });
+}
+
+//
+
+
+
+const server = app.listen(
+  3001,
+  console.log(`Server running on PORT ${3001}...`)
+);
+const io = require("socket.io")(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
@@ -41,3 +73,4 @@ async function findOrCreateDocument(id) {
   if (document) return document
   return await Document.create({ _id: id, data: defaultValue })
 }
+

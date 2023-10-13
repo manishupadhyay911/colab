@@ -23,7 +23,7 @@ export default function TextEditor() {
   const [quill, setQuill] = useState()
 
   useEffect(() => {
-    const s = io("https://colab.onrender.com")
+    const s = io("https://colab-ywka.onrender.com")
     // const s = io("http://localhost:3001")
     setSocket(s)
 

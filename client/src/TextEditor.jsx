@@ -91,6 +91,7 @@ export default function TextEditor() {
     const q = new Quill(editor, {
       theme: "snow",
       modules: { toolbar: TOOLBAR_OPTIONS },
+      placeholder: 'Start Typing...'
     })
     q.disable()
     q.setText("Loading...")

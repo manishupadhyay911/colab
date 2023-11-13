@@ -3,6 +3,7 @@ import Quill from "quill"
 import "quill/dist/quill.snow.css"
 import { io } from "socket.io-client"
 import { useParams,Link } from "react-router-dom"
+import { Container,Box, Stack } from "@chakra-ui/react"
 
 const SAVE_INTERVAL_MS = 2000
 const TOOLBAR_OPTIONS = [
@@ -23,8 +24,8 @@ export default function TextEditor() {
   const [quill, setQuill] = useState()
 
   useEffect(() => {
-    const s = io("https://colab-ywka.onrender.com")
-    // const s = io("http://localhost:3001")
+    // const s = io("https://colab-ywka.onrender.com")
+    const s = io("http://localhost:3001")
     setSocket(s)
 
     return () => {
@@ -91,17 +92,18 @@ export default function TextEditor() {
     const q = new Quill(editor, {
       theme: "snow",
       modules: { toolbar: TOOLBAR_OPTIONS },
-      placeholder: 'Start Typing...'
+      placeholder: 'Start Typing...',
+      // bounds:'#parent'
     })
     q.disable()
     q.setText("Loading...")
     setQuill(q)
   }, [])
   return (
-    <>
-    <div>
-    <button><Link to={`/`}>Home</Link></button>
-  <div className="container" ref={wrapperRef}></div>
-  </div>
-  </>
+  
+    <Container width="l" minH="xl">
+     
+     <Box ref={wrapperRef} width="l" minH="xl"></Box>
+   
+    </Container>
   )}

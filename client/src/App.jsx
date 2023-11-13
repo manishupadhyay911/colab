@@ -1,28 +1,21 @@
-import TextEditor from "./TextEditor"
-import Navbar from "./Navbar"
-import Home from './Home'
-import {
-  BrowserRouter as Router,
-  Route,Routes,
-  Navigate,Link
-} from "react-router-dom"
-import { v4 as uuidV4 } from "uuid"
-import './App.css'
-
+import {Route, RouterProvider, createBrowserRouter,createRoutesFromElements} from 'react-router-dom'
+import Layout from './Layout.jsx'
+import Home from './Home.jsx'
+import TextEditor from './TextEditor.jsx'
 function App() {
-
+  const router= createBrowserRouter(
+    createRoutesFromElements(
+      <Route path='/' element ={<Layout/>}>
+        <Route path='' element={<Home/>}/>
+        <Route path='documents/' element={<TextEditor/>}>
+          <Route path=':id' element={<TextEditor/>}/>
+        </Route>
+  
+      </Route>
+    )
+  )
   return (
-    <>
-      
-      <Router>
-      <Routes>
-      
-        {/* <Route path="/" element={<Navigate replace to={`/documents/${uuidV4()}`} />}/> */}
-        <Route path="/" element={<Home/>}/>
-        <Route path="/documents/:id" element={<TextEditor />}/>
-      </Routes>
-    </Router>
-    </>
+    <RouterProvider router={router}/>
   )
 }
 
